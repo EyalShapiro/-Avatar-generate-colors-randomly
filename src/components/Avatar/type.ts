@@ -1,4 +1,4 @@
-export interface IUserType {
+export type IUserType = {
   firstName: string;
   lastName: string;
 }

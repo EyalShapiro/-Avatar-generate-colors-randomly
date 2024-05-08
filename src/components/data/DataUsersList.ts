@@ -182,3 +182,5 @@ for (let i = 0; i < numberAdd; i++) {
   const lastName = generateRandomName();
   DataUsersList.push({ firstName, lastName });
 }
+DataUsersList.unshift({ firstName: 'א', lastName: "ת" })
+DataUsersList.unshift({ firstName: "ת", lastName: "א" })

@@ -1,25 +1,31 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { colorType, getColorFormAvatar } from "./getColorFormAvatar";
 import { IUserType } from "./type";
 
-const initials = (firstName: string, lastName: string) => (firstName[0] + lastName[0]).toUpperCase();
+const initials = (firstName: string, lastName: string) =>
+	lastName && firstName && (firstName[0] + lastName[0]).toUpperCase();
 
-export const Avatar: React.FC<IProps> = ({ user: { firstName, lastName } }) => {
+export const Avatar: React.FC<Props> = ({ user: { firstName, lastName } }) => {
 	const [colorAvatar, setColorAvatar] = useState<colorType>({
 		colorText: `black`,
 		backgroundColor: "white",
 	});
-	const { colorByUser } = getColorFormAvatar();
+
 	useEffect(() => {
-		setColorAvatar(colorByUser({ firstName, lastName }));
-	}, [colorByUser, firstName, lastName]);
+		setColorAvatar(getColorFormAvatar().colorByUser({ firstName, lastName }));
+	}, [firstName, lastName]);
 
 	return (
 		<div
 			style={{
 				margin: "1rem",
-				display: "inline-block",
+				alignItems: "center",
+				justifyContent: "center",
+				padding: "0.5em",
 				outline: "inset 0.5rem",
+				height: "max-content",
+				width: "max-content",
+
 				outlineColor: colorAvatar.backgroundColor ? colorAvatar.backgroundColor : "black",
 			}}
 		>
@@ -32,17 +38,25 @@ export const Avatar: React.FC<IProps> = ({ user: { firstName, lastName } }) => {
 					margin: "2rem",
 					padding: "2px",
 					alignItems: "center",
-					// width: "max-content",
 					height: "max-content",
 				}}
 			>
 				{initials(firstName, lastName)}
 			</div>
-			<b style={{ color: "lavender", backgroundColor: "black", padding: "1px" }}>{colorAvatar.backgroundColor}</b>
+			<b
+				style={{
+					color: "lavender",
+					backgroundColor: "black",
+					padding: "2px",
+					margin: "1em",
+				}}
+			>
+				{colorAvatar.backgroundColor}
+			</b>
 		</div>
 	);
 };
 
-interface IProps {
+interface Props {
 	user: IUserType;
 }
